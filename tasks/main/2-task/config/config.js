@@ -21,4 +21,7 @@ const NEW_EMP_DATASET_FILE_PATH = path.resolve(
   "dataset/new_employees.json",
 );
 
-export { EMP_DATASET_FILE_PATH, NEW_EMP_DATASET_FILE_PATH };
+// Part3: logs dir
+const LOG_DIR_PATH = path.resolve(__dirname, "..", "log");
+
+export { EMP_DATASET_FILE_PATH, NEW_EMP_DATASET_FILE_PATH, LOG_DIR_PATH };
