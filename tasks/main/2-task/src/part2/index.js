@@ -89,6 +89,19 @@ const PORT = 4000;
 const server = http.createServer(async (req, res) => {
   try {
     switch(req.url) {
+        case "/":
+          res.end(`
+                <h1>Welcome to Homepage</h1>
+                <h3>Task 2: Part 2</h3>
+                <p>Available Endpoints:</p>
+                <ul>
+                <li><a href="http://localhost:${PORT}/api/employees/delete/classE">/api/employees/delete/classE</a></li>
+                <li><a href="http://localhost:${PORT}/api/employees/update/classD">/api/employees/update/classD</a></li>
+                <li><a href="http://localhost:${PORT}/api/employees/insert/new">/api/employees/insert/new</a></li>
+                <li><a href="http://localhost:${PORT}/api/employees/get/classC">/api/employees/get/classC</a></li>
+                </ul>
+                `);
+          break;
         case "/api/employees/delete/classE":
             await delete_class_e_emp();
             res.end(JSON.stringify({
@@ -128,15 +141,9 @@ const server = http.createServer(async (req, res) => {
             break;
         default:
             res.end(`
-                <h1>Available Endpoints:</h1>
-                <p>Please return back to homepage for all api endpoint list.</p>
-                <ul>
-                <li><a href="http://localhost:${PORT}/api/employees/delete/classE">/api/employees/delete/classE</a></li>
-                <li><a href="http://localhost:${PORT}/api/employees/update/classD">/api/employees/update/classD</a></li>
-                <li><a href="http://localhost:${PORT}/api/employees/insert/new">/api/employees/insert/new</a></li>
-                <li><a href="http://localhost:${PORT}/api/employees/get/classC">/api/employees/get/classC</a></li>
-                </ul>
-                `);
+                <h1>Page Not Found</h1>
+                <p>Go back to <a href="/">Homepage</a></p>`);
+            break;
     }
   } catch (error) {
     console.error(`Error: ${error}`);

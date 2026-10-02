@@ -43,6 +43,20 @@ const PORT = 3000;
 
 const server = http.createServer((req, res) => {
   switch (req.url) {
+    case "/":
+      res.end(`
+                <h1>Welcome to Homepage</h1>
+                <h3>Task 2: Part 1</h3>
+                <p>Available Endpoints:</p>
+                <ul>
+                <li><a href="http://localhost:${PORT}/api/employees/classA">/api/employees/classA</a></li>
+                <li><a href="http://localhost:${PORT}/api/employees/classB">/api/employees/classB</a></li>
+                <li><a href="http://localhost:${PORT}/api/employees/classC">/api/employees/classC</a></li>
+                <li><a href="http://localhost:${PORT}/api/employees/classD">/api/employees/classD</a></li>
+                <li><a href="http://localhost:${PORT}/api/employees/classE">/api/employees/classE</a></li>
+                </ul>
+                `);
+      break;
     case "/api/employees/classA":
       res.end(
         JSON.stringify({
@@ -90,16 +104,9 @@ const server = http.createServer((req, res) => {
       break;
     default:
       res.end(`
-                <h1>Available Endpoints:</h1>
-                <p>Please return back to homepage for all api endpoint list.</p>
-                <ul>
-                <li><a href="http://localhost:${PORT}/api/employees/classA">/api/employees/classA</a></li>
-                <li><a href="http://localhost:${PORT}/api/employees/classB">/api/employees/classB</a></li>
-                <li><a href="http://localhost:${PORT}/api/employees/classC">/api/employees/classC</a></li>
-                <li><a href="http://localhost:${PORT}/api/employees/classD">/api/employees/classD</a></li>
-                <li><a href="http://localhost:${PORT}/api/employees/classE">/api/employees/classE</a></li>
-                </ul>
-                `);
+                <h1>Page Not Found</h1>
+                <p>Go back to <a href="/">Homepage</a></p>`);
+      break;
   }
 });
 
