@@ -32,18 +32,36 @@ const PORT = 5000;
 const server = http.createServer((req, res)=>{
     switch(req.url){
         case "/":
-            break;
+            res.end(`
+                <h1>Welcome to Homepage</h1>
+                <h3>Task 2: Part 3</h3>
+                <p>Available Endpoints:</p>
+                <ul>
+                <li><a href="http://localhost:${PORT}"></a></li>
+                <li><a href="http://localhost:${PORT}"></a></li>
+                <li><a href="http://localhost:${PORT}"></a></li>
+                <li><a href="http://localhost:${PORT}"></a></li>
+                </ul>
+                `);
+          break;
         case "/users":
+            res.end("Users page")
             break;
         case "/products":
+            res.end("Products page")
             break;
         case "/display":
+            res.end("Display page")
             break;
         case "/books":
+            res.end("Books page")
             break;
         default:
-            res.end("Default page!");
+            res.end(`
+                <h1>Page Not Found</h1>
+                <p>Go back to <a href="/">Homepage</a></p>`);
+            break;
     }
 });
 
-server.listen(PORT, "localhost", () => console.log(`Part3 server is running at http://localhost:${PORT}.`));
+server.listen(PORT, "localhost", () => console.log(`Part3 server is running at http://localhost:${PORT}/.`));
