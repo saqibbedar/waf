@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add user</title>
+  </head>
+  <body>
+    <%- include('partials/navbar') %>
+    <h2>Add User Form</h2>
+    <form class="form">
+      <input
+        name="username"
+        type="text"
+        placeholder="Enter username"
+        maxlength="10"
+        minlength="6"
+        required
+      />
+      <br />
+      <input
+        name="name"
+        type="text"
+        placeholder="Enter name"
+        maxlength="50"
+        minlength="6"
+        required
+      />
+      <br />
+      <input name="email" type="email" placeholder="Enter email" required />
+      <br />
+      <input type="submit" value="Submit" />
+    </form>
+
+    <script>
+      function handleFormSubmission() {
+        const form = document.querySelector(".form");
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+          const data = Object.fromEntries(formData.entries());
+
+          fetch("/api/user", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-User-Role": "admin",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if(data.success) {
+                window.location.reload();
+              } else {
+                alert(data.error);
+                window.location.reload();
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        });
+      }
+
+      handleFormSubmission()
+    </script>
+  </body>
+</html>

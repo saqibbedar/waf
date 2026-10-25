@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        .edit-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #a9a9a9a1;
+    height: 100vh;
+    width: 100%;
+    backdrop-filter: blur(13px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.edit {
+        background: #ffffff;
+    padding: 25px;
+    border-radius: 5%;
+}
+    </style>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+
+    <button onclick="showTable()">Show Information</button>
+    <div id="tableContainer"></div>
+
+    <div class="edit-overlay">
+        
+    </form>
+    </div>
+    <script>
+
+        const editElem = document.querySelector(".edit-overlay");
+
+        function closeEditForm(){
+            editElem.style.display = "none";
+        }
+
+        // accepts unique username
+        function edit(user){
+            editElem.style.display = "flex";
+            // method put /api/user
+            let html = `
+            <div class="edit">
+            <h2>Edit User: ${user.username}</h2>
+        <form class="form">
+        <input name="username" type="text" value='${user.username}' placeholder="Enter username" maxlength="10" minlength="6" required> <br>
+        <input name="name" type="text" value='${user.name}' placeholder="Enter name" maxlength="50" minlength="6" required> <br>
+        <input name="email" type="email" value='${user.email}' placeholder="Enter email" required> <br>
+        <input type="submit" value="Submit">
+        <input type="button" value="Cancel" onclick="closeEditForm()">
+        </form>
+        </div>
+        `
+
+        editElem.innerHTML = html;
+
+        handleFormSubmission()
+
+        }
+
+        // accepts unique username
+        function remove(username){
+            fetch("/api/user",
+            {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-User-Role": "admin"
+                },
+                body: JSON.stringify({ username: username })
+            }).then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.success) {
+                    alert(data.message)
+                    window.location.reload(); 
+                }
+            }).catch(err => console.error(err));
+        }
+
+        function showTable(){
+
+            document.getElementById("tableContainer").innerHTML = `
+             <table border="1">
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Full Name</th>
+      <th>Email</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% users.map((user)=>{ %>
+        <tr>
+      <td><%= user.username %></td>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td>
+        <button onclick='edit(<%- JSON.stringify(user) %>)'>edit</button>
+        <button onclick="remove('<%= user.username %>')">remove</button>
+      </td>
+    </tr>
+
+   <% }) %>
+    
+  </tbody>
+</table>            
+
+            `
+        }
+
+        function handleFormSubmission() {
+        const form = document.querySelector(".form");
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+          const data = Object.fromEntries(formData.entries());
+
+          fetch("/api/user", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "X-User-Role": "admin",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              // alert(data.message);
+              if(data.success) {
+                window.location.reload();
+              } else {
+                alert(data.error);
+                window.location.reload();
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        });
+      }
+
+    </script>
+    
+
+</body>
+</html>
