@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Details</title>
+</head>
+<body>
+
+    <h1>Full CV Details</h1>
+
+    <h2><%= resume.fullname %></h2>
+
+    <% if (resume.image) { %>
+        <img src="/uploads/<%= resume.image %>" width="150" alt="Profile image">
+    <% } %>
+
+    <p>Contact: <%= resume.contact %></p>
+    <p>Email: <%= resume.email %></p>
+
+    <h3>Qualifications</h3>
+    <p><%= resume.qualifications.join(", ") %></p>
+
+    <h3>Certifications</h3>
+    <p><%= resume.certifications.join(", ") %></p>
+
+    <h3>Professional Experience</h3>
+    <p><%= resume.experience.join(", ") %></p>
+
+    <h3>Skills</h3>
+    <p><%= resume.skills.join(", ") %></p>
+
+    <h3>Languages</h3>
+    <p><%= resume.languages.join(", ") %></p>
+
+    <h3>Hobbies</h3>
+    <p><%= resume.hobbies.join(", ") %></p>
+
+    <h3>Research Statement</h3>
+    <p><%= resume.researchStatement %></p>
+
+    <h3>Summary</h3>
+    <p><%= resume.summary %></p>
+
+    <h3>Uploaded Documents</h3>
+    <% resume.documents.forEach(file => { %>
+        <p><a href="/uploads/<%= file %>" target="_blank"><%= file %></a></p>
+    <% }); %>
+
+    <a href="/resumes">Back to Home</a>
+
+</body>
+</html>

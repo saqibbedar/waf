@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit CV</title>
+</head>
+<body>
+
+    <h1>Update CV</h1>
+
+    <form id="editForm" enctype="multipart/form-data">
+
+        <label>Full Name:</label>
+        <input type="text" name="fullname" value="<%= resume.fullname %>">
+        <br><br>
+
+        <label>Contact:</label>
+        <input type="text" name="contact" value="<%= resume.contact %>">
+        <br><br>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="<%= resume.email %>">
+        <br><br>
+
+        <label>Qualifications:</label>
+        <textarea name="qualifications"><%= resume.qualifications.join(", ") %></textarea>
+        <br><br>
+
+        <label>Certifications:</label>
+        <textarea name="certifications"><%= resume.certifications.join(", ") %></textarea>
+        <br><br>
+
+        <label>Experience:</label>
+        <textarea name="experience"><%= resume.experience.join(", ") %></textarea>
+        <br><br>
+
+        <label>Skills:</label>
+        <textarea name="skills"><%= resume.skills.join(", ") %></textarea>
+        <br><br>
+
+        <label>Languages:</label>
+        <textarea name="languages"><%= resume.languages.join(", ") %></textarea>
+        <br><br>
+
+        <label>Hobbies:</label>
+        <textarea name="hobbies"><%= resume.hobbies.join(", ") %></textarea>
+        <br><br>
+
+        <label>Research Statement:</label>
+        <textarea name="researchStatement"><%= resume.researchStatement %></textarea>
+        <br><br>
+
+        <label>Summary:</label>
+        <textarea name="summary"><%= resume.summary %></textarea>
+        <br><br>
+
+        <label>New Profile Image:</label>
+        <input type="file" name="image" accept="image/*">
+        <br><br>
+
+        <label>New Documents:</label>
+        <input type="file" name="documents" multiple>
+        <br><br>
+
+        <button type="submit">Update CV</button>
+
+    </form>
+
+    <a href="/resumes">Back to Home</a>
+
+    <script>
+        document.getElementById("editForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            fetch("/resumes/<%= resume._id %>", { method: "PATCH", body: formData })
+                .then(() => window.location.href = "/resumes")
+                .catch(err => console.error(err));
+        });
+    </script>
+
+</body>
+</html>
