@@ -1,0 +1,287 @@
+How MongoDB is a document-oriented NoSQL database system
+	MySQL or SQL Server store data in tables or tabular form
+		Each table has a structure called a schema 
+			A table has columns/fields with data types and 					
+			rows/records
+	NoSQL means 
+		schema-less database 
+		no tables or relations
+	document-oriented means
+		data stored in JSON	 
+
+SQL MySQL 	vs 	MongoDB 
+Database		Database
+Tables			Collections ({},{},{},{},...) - set of JSON objects
+Rows			Documents  ({})
+
+Example - user collection - user document
+ 
+    nested/embedded documents - no primary/foreign requirements	
+ex-1
+ {
+  "id": 1,
+  "user": {
+    "first_name": "Bashir",
+    "last_name": "Ahmad",
+    "email": "wwye0@mayoclinic.com",
+    "gender": "Male"
+  },
+  "network": {
+    "ip_address": "162.231.226.81"
+  }
+} 
+
+Another example: Multiple levels of nesting
+{
+  "id": 1,
+  "personal_info": {
+    "name": {
+      "first_name": "Bashir",
+      "last_name": "Ahmad"
+    },
+    "contact": {
+      "email": "wwye0@mayoclinic.com"
+    },
+    "gender": "Male"
+  },
+  "technical_info": {
+    "network": {
+      "ip_address": "162.231.226.81"
+    }
+  }
+}
+
+Example: JSON document with an array field
+{
+  "id": 1,
+  "first_name": "Bashir",
+  "last_name": "Ahmad",
+  "email": "wwye0@mayoclinic.com",
+  "gender": "Male",
+  "ip_address": "162.231.226.81",
+  "skills": [
+    "JavaScript",
+    "Node.js",
+    "Express.js",
+    "SQL"
+  ],
+  "orders": [
+    {
+      "order_id": 101,
+      "product": "Laptop",
+      "price": 1200
+    },
+    {
+      "order_id": 102,
+      "product": "Keyboard",
+      "price": 75
+    }
+  ]
+}
+
+
+    Every document can have different fields
+    The number of fields can vary between documents
+
+  data stored together
+  flexibility increased
+MongoDB provides high scalability, flexibility, and performance
+MongoDB is an open-source and cross-platform database system 
+
+MongoDB Community Edition
+   -  MongoDB Community Edition
+           MongoDB Compass tool - GUI - installed with MongoDB        
+           Community Edition
+
+     Mongosh shell - CLI - installed separately   
+
+Installation steps
+1. Download the MongoDB Community Edition installer from the official MongoDB website
+2. Set up the environment variable with the path  
+3. Install mongosh
+mongosh
+Basic commands
+------------------
+show dbs
+Create a database - use db-name
+Use or activate an existing database - use db-name
+db - current  database
+db.createCollection() - create collection
+show collections - show collections in the current database
+db.old-collection.renameCollection()  - rename collecion
+db.help() - a list showing what methods or functions can be applied  
+db. collection-name.help() - collection specific methods
+db. collection-name.drop() - delete collecion
+db.collection_name.drop() - deletes a collection
+db.dropDatabase() - delete db
+exit - to exit he mongo shell 
+
+
+
+insertOne() - to insert a single document - inserts a single object into the database 
+insertMany() - to insert multiple documents at once - inserts an array of objects into the database 
+
+updateOne() and updateMany() - update the first or the top and all matching 
+                               documents
+                               - update single and multiple fields
+                                db.COLLECTION_NAME.updateOne({key:'value'},{$set: {key: 'updated value'}})
+
+                                db.COLLECTION_NAME.updateMany({key:'value'},{$set: {key1: 'updated value', key2: 'updated value'}})
+                            - $unset - delete the field from the document
+                                db.COLLECTION_NAME.updateOne/updateMany({key:'value'},{$unset: {key: ''}})
+                            - $rename - changes the name of the field
+                            - $inc - increments the value of a field
+                            - $mul - multiplies the value of a field
+                            - $currentDate - set the current date as field value
+
+
+deleteOne() and deleteMany() - delete one and many matching documents
+
+find() and findOne() - find all and top matched documents 
+
+
+count - count() method retrieve/fetch the number of documents in a collection 
+        that match a specified query
+        db.COLLECTION_NAME.find().count()
+      - countDocuments() method db.COLLECTION_NAME.countDocuments()
+
+sort - sort() method is used to specify the order in which the query returns
+       matching documents from collection - ascending (1) descending (-1)
+            db.COLLECTION_NAME.find().sort({name: 1})
+      - sort by multiple fields
+        ....sort({name: 1, email: -1})
+      - sort and limit / skip the result
+limit - limit() method is used to control the number of documents returned in 
+        query result   
+        restriction of result size to reduce client load and improves performance
+            db.COLLECTION_NAME.find().limit(3)   
+            sort(...).limit(5) - sort the top 5 results
+
+skip - skip certain result size
+          - db.COLLECTION_NAME.find().limit(3)
+            skip the first 3 and shows the remaining top 3,
+          - sort(...).limits(3).skip(4) - skip the first four result and      shows the sorted top three from the remaining document set. 
+
+Projection - method to specify which fields you want to retrieve from      
+             documents
+             db.COLLECTION_NAME.find({ query }, { projection })
+            db.COLLECTION_NAME.find({},{name: 1, age:1})
+            db.COLLECTION_NAME.find({},{name: 1, age:1}).sort({name: -1})
+            db.COLLECTION_NAME.find({},{name: 1, age:1}).sort({name: 1}).limit(3)
+
+Comparison or query operator
+    - used in complex searches
+    -$gt - greater than {FIELD: {$gt : VALUE}}
+    -$lt - less than {FIELD: {$lt : VALUE}}
+    -$gte - greater than or equal to {FIELD: {$gte : VALUE}}
+    -$lt - less than or equal to {FIELD: {$lte : VALUE}}
+    -$eq - equal to {FIELD: {$eq : VALUE}}
+    -$ne - not equal to {FIELD: {$ne : VALUE}}
+    -$in - values inside {FIELD: {$in : [VAL1, VAL2, VAL3, ...]}}
+    -$nin - reverse of $in - values not inside {FIELD: {$nin : [VAL1, VAL2, VAL3, ...]}}
+    - CRUD using query operators
+      - db.COLLECTION_NAME.find({field: {$gt: VALUE}})
+      - db.COLLECTION_NAME.updateOne({field: {$gt: VALUE}}, {$set: {UPDATED_FIELD: UPDATED_VALUE}})
+      - db.COLLECTION_NAME.deleteOne({field: {$gt: VALUE}})
+    
+Logical operators
+    - used in complex searches
+    - combine different filters
+    - $and - returns documents where both queries must match - {$and: [{condition-1},{condition-2}]}
+    - $or - returns documents where either query matches- {$or: [{condition-1},{condition-2}]}
+    -specify range - 
+    - can use projection with logical operators 
+    - $nor - returns documents where both queries fail to match - {$nor: [{condition-1},{condition-2}]}
+    - $not - returns documents where the query does not match(single condition) - {FIELD: {$not: {$gte: 30}}}
+    -CRUD using logical operators
+
+element query operator
+    - $exists - matches documents that have the specified field.
+        - {FIELD: {$exists: <Boolean_Value>}}
+    - $type - selects doucments if a field is of the specified type
+        - {FIELD: {$type: <Data_Type>}}
+        - {FIELD: {$type: [<Data_Type_1>, <Data_Type_2>]}}
+
+connect MongoDB locally 
+  - npm install mongoose
+  - import mongoose from 'mongoose'
+  - Schema - define the structure
+    - model
+    - Crud using model
+
+CRUD with expressJS and MongoDB
+  - post
+  - get
+  - get by id
+  - patch
+  - put
+    - update one and many
+  - delete
+
+MVC - Controller manipulate model
+      Model updates view
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            db.adminCommand({ getCmdLineOpts: 1 })

@@ -1,0 +1,89 @@
+event module - work with events in NodeJs
+    event - is an action or an occurrence that we can respond to
+    can dispatch / enroll / register our own custom events and respond
+    EventEmitter is a core module to create and handle custom events
+	part of event module often used for building event driven systems in NodeJS
+	key methods
+		1. emit(eventName, [args])
+			emits (or triggers) an event with a specified event name.
+			pass arguments used by the listeners
+			like calling a function - triggers all listeners attached to the specified event
+		2. on(eventNAME, listener)
+			attaches a listener (a function) to a specific eventName.
+			listener will execute when the event is emitted
+code example 
+Create a program using NodeJS that listens for multiple events. 
+Tracks the number of times each event is emitted.
+logs a summary report of all event occurrences.
+    create at least four or five events
+    emit these events multiple times with different arguments
+
+building web sever
+js - client side scripting language
+nodejs - server side language and a runtime environment that allows js to be executed on the server side
+follows client - server architecture    
+
+		request 
+	-------------------------->
+		URL
+client  				server
+		response
+	<--------------------------
+		data
+
+     
+
+	   http request header (request type GET/POST/..)
+
+	-------------------------->
+		http request  				
+client					server
+
+	   http response header (content length, content type, ..)
+	<--------------------------
+		http response
+
+http module
+- http module is used to create a server in nodejs
+- http allows nodejs to transfer data over http
+- allows to create a server using http.createServer() method which listens for incoming requests
+  and handles them using a callback function
+
+third party modules / external modules
+-dotenv
+-URL 
+	-query parameters
+-chalk - add colors to console output
+	chalk.red()	
+	chalk.green()
+	chalk.blue() 
+	chalk.yellow()
+	chalk.bold()  
+	chalk.italic()
+	chalk.underline()
+	chalk.bgRed()    
+	chalk.bgGreen()  
+-colors - color console text
+-validator - validate strings
+	- isEmail() - Email validation
+	- isURL()	- URL validation
+	- isNumeric()	- Numbers
+	- isAlpha()     - Letters
+	- isEmpty()     - Empty string
+	- isLength(str,{min: , max})    - String length
+	- isIP()        - IP address
+	- isLowercase() - Lowercase
+	- isUppercase() - Uppercase
+	- contains()    - Check for text
+-prompt - take input from the user
+	-get multiple inputs (username, password)
+		-cb, chaining,await
+	-validation and color styling in terminal with a prompt,
+
+Task-2 Problems Statement
+
+
+
+
+
+

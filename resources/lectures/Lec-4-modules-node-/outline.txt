@@ -1,0 +1,18 @@
+User Defined / Custom modules
+    - each file - a separate file
+    - functions, variables, objects or class in one
+      file can not be accessed in another file
+    - unless explicitly exported
+    - allow you to split your application into 
+      multiple files
+    - and reuse functions, variables, objects 
+      or classes
+    - makes code modular, maintainable and
+      easy to debug
+Importing and Exporting User Defined or Custom modules
+    - named Export and default export
+       exporting function, variables, objects, and class        - destructuring
+        - renaming
+        - as object
+        - a class
+- Node CLI applications

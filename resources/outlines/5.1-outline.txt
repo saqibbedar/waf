@@ -1,0 +1,118 @@
+- node js fetching data from API using interactive terminal
+- http methods
+    -GET - fetch some data from server
+    -POST - send and mutate some data in server
+    -UPDATE - update an instance of data in server
+    -DELETE - delete an instance of data
+    -PATCH - update a certain attribure / property of an instance
+-how can we use these methods in node JS
+    - code maintainability and structure becomes complex
+    - express JS solves this problem
+-Express JS
+    - Node Js known for non-blocking, event driven architecture
+      to build efficient and scalable applications
+        - handling routes and server logic in NodeJS becomes complex
+    - a lightweight framework that abstracts some of
+      the NodeJS complexities and provides a simple interface
+    - a minimal and flexible Node JS web application framework
+    - provides robust set of features for web apps
+    - simplifies the process of building web servers and APIs
+    - full integration with NodeJS
+        - build on top on NodeJS
+        - can use all of NodeJs functionality
+    - used for server side applications
+    - key features
+        - middleware
+        - routing
+        - template engines
+        - error handling
+        - static file serving
+        - RESTful API development
+
+-code example
+    - simple route + query parameter using http.createServer with express app
+    - using express
+        - app.get(route,route handler)
+        - default route app.get('*', route handler) and app.get('/{*splat}', route handler)
+
+-routing - how app responds to a client request
+            - to a particular endpoint (a URL)
+            - and a specific http request methods
+                - GET, POST, UPDATE, PATCH, DELETE
+         - each route can have one or more handler functions
+            - executed when the route is matched
+            -handle different type of http request                
+
+         search box - API
+         /search?q=API
+         client - server architecture is followed
+            - client sends GET request and pass API to server
+            - the server finds through routing that there is a GET request and some data passed from client 
+            - responds with the data
+     
+- render JSON and HTML response
+
+- serve static files - app.use(express.static())
+        - express.static() middleware serves static files
+            - html, css, js, and images from a specified directory on the server
+            - rendering home.html from public on url / (issue)
+                - sol1 - change home.html to index.html
+                - sol2 - create a /home route and use sendFile
+    - simplifying configuration and reducing development effort
+    - when a client requests a static file
+        - expressJS uses express.static to locate and render to the client's browser
+            - without additional routing logic
+
+- serving static files home.html, about.html, contact.html, error.html
+app.get('/home',(req,res)) - sendFile()                                      app.get('/about',(req,res))
+app.get('/contact',(req,res))                                        app.get('/{*splat}',(req,res))
+
+- REST API or RESTful API (Representational State Transfer API )
+    A REST API (Representational State Transfer Application Programming Interface) is an application programming interface that follows the principles of the REST architectural style to enable communication between client and server applications over HTTP.
+
+A REST API represents data as resources, which are identified by URLs (Uniform Resource Locators) and manipulated using standard HTTP methods such as GET, POST, PUT, PATCH, and DELETE. Responses are commonly exchanged in formats such as JSON.
+
+A REST API is an HTTP-based interface that allows clients to access and manipulate server-side resources according to the principles of REST.
+
+response sent as html or json
+    if response sent as html it means SSR Server Side Rendering. 
+    SSR is fast because it needs no processing
+    SSR is useful if you are sure that your client is a browser
+
+    if response sent as json it means data has to be processed on the 
+    client side
+    CSR is useful for cross platforms 
+    CSR is slow because data is fetched and then rendered
+
+
+res.send() and res.render() user to render html
+res.json() for json data rendering
+
+REST API Rules
+--------------
+1. follow client - server architecture
+2. respect all http methods (GET, POST, PATCH, DELETE, PUT)
+
+METHOD ENDPOINT
+GET /users  - fetch/get all users and return
+POST /user  - handle create a new user
+PATCH /user/1 - update one or more fields of a certain user 1
+PUT /user/2 - update user 2 completely
+DELETE /user/3 - delete user 3
+
+instead of using POST /createUser, POST /updateUser
+
+
+GET /users - html
+GET /api/users - json
+
+building and testing REST API
+---------------------------------
+0. GET /users
+1. GET /api/users - Get all users
+2. GET /api/users/1 - Get the user with ID 1
+   GET /api/users/5 - Get the user with ID 5
+3. POST /api/users - create user 
+4. PATCH /api/users/1 - update certain fields of user with ID 1
+5. DELETE /api/users/1 - delete the user with ID 1
+6. PUT /api/users/1 - update the user with ID 1
